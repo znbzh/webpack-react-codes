@@ -19,40 +19,36 @@ module.exports= {
   //enable dev server
   devServer: {
     historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true
+    hot: true
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    root: APP_PATH
+    modules: [APP_PATH, "node_modules"],
+    extensions: ['.js', '.jsx']
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loaders: ['eslint'],
+        enforce: "pre",
+        loaders: ['eslint-loader'],
         include: APP_PATH
-      }
-    ],
-    loaders: [
+      },
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel'],
+        loaders: ['babel-loader'],
         include: APP_PATH
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  },
-  jshint: {
-    "esnext": true
   },
   plugins: [
     new HtmlwebpackPlugin({
       title: 'Deskmark app'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+
   ]
 }
